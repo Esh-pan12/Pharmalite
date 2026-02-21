@@ -1,0 +1,186 @@
+/* ============================================================
+   PharmaLite – Coming Soon / Stub Pages
+   ============================================================ */
+
+.stub-page {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    min-height: 60vh;
+    text-align: center;
+    padding: 40px 24px;
+    gap: 0;
+}
+
+.stub-illustration {
+    position: relative;
+    width: 180px;
+    height: 180px;
+    margin-bottom: 32px;
+}
+
+.stub-illustration-bg {
+    position: absolute;
+    inset: 0;
+    border-radius: 50%;
+    opacity: 0.12;
+    animation: pulse 3s ease-in-out infinite;
+}
+
+.stub-illustration-icon {
+    position: absolute;
+    inset: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 5rem;
+}
+
+.stub-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    padding: 5px 14px;
+    border-radius: var(--radius-pill);
+    font-size: 0.75rem;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    margin-bottom: 20px;
+    border: 1px solid;
+}
+
+.stub-badge.green {
+    background: rgba(0, 168, 120, 0.12);
+    color: var(--primary);
+    border-color: rgba(0, 168, 120, 0.25);
+}
+
+.stub-badge.purple {
+    background: rgba(124, 58, 237, 0.12);
+    color: #a78bfa;
+    border-color: rgba(124, 58, 237, 0.25);
+}
+
+.stub-badge.blue {
+    background: rgba(59, 130, 246, 0.12);
+    color: #60a5fa;
+    border-color: rgba(59, 130, 246, 0.25);
+}
+
+.stub-title {
+    font-family: var(--font-heading);
+    font-size: 2rem;
+    font-weight: 800;
+    color: var(--text-primary);
+    margin-bottom: 14px;
+    line-height: 1.2;
+}
+
+.stub-desc {
+    font-size: 0.95rem;
+    color: var(--text-muted);
+    max-width: 480px;
+    line-height: 1.7;
+    margin-bottom: 36px;
+}
+
+/* Feature preview cards */
+.stub-features {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 16px;
+    width: 100%;
+    max-width: 640px;
+    margin-bottom: 40px;
+}
+
+.stub-feature-card {
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-lg);
+    padding: 20px 16px;
+    text-align: center;
+    transition: all var(--transition);
+}
+
+.stub-feature-card:hover {
+    border-color: var(--border-hover);
+    transform: translateY(-3px);
+}
+
+.stub-feature-icon {
+    font-size: 1.6rem;
+    margin-bottom: 10px;
+}
+
+.stub-feature-label {
+    font-family: var(--font-heading);
+    font-size: 0.82rem;
+    font-weight: 700;
+    color: var(--text-primary);
+    margin-bottom: 4px;
+}
+
+.stub-feature-sub {
+    font-size: 0.72rem;
+    color: var(--text-muted);
+}
+
+.stub-actions {
+    display: flex;
+    gap: 12px;
+    flex-wrap: wrap;
+    justify-content: center;
+}
+
+/* Progress bar hint */
+.stub-progress-wrap {
+    width: 100%;
+    max-width: 400px;
+    margin-bottom: 32px;
+}
+
+.stub-progress-label {
+    display: flex;
+    justify-content: space-between;
+    font-size: 0.78rem;
+    color: var(--text-muted);
+    margin-bottom: 8px;
+}
+
+.stub-progress-track {
+    width: 100%;
+    height: 6px;
+    background: var(--border);
+    border-radius: var(--radius-pill);
+    overflow: hidden;
+}
+
+.stub-progress-bar {
+    height: 100%;
+    border-radius: var(--radius-pill);
+    background: var(--gradient-primary);
+    animation: progressPulse 2s ease-in-out infinite alternate;
+}
+
+@keyframes progressPulse {
+    from {
+        opacity: 0.6;
+    }
+
+    to {
+        opacity: 1;
+    }
+}
+
+@media (max-width: 600px) {
+    .stub-features {
+        grid-template-columns: 1fr;
+    }
+
+    .stub-title {
+        font-size: 1.5rem;
+    }
+}

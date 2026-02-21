@@ -1,0 +1,608 @@
+/* ============================================================
+   PharmaLite – Inventory Page
+   ============================================================ */
+
+/* ── Toolbar ────────────────────────────────────────────── */
+.inv-toolbar {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    flex-wrap: wrap;
+    margin-bottom: 20px;
+}
+
+.inv-search-wrap {
+    position: relative;
+    flex: 1;
+    min-width: 220px;
+    max-width: 380px;
+}
+
+.inv-search-icon {
+    position: absolute;
+    left: 14px;
+    top: 50%;
+    transform: translateY(-50%);
+    opacity: 0.4;
+    pointer-events: none;
+    font-size: 0.95rem;
+}
+
+.inv-search {
+    width: 100%;
+    background: var(--bg-card);
+    border: 1.5px solid var(--border);
+    border-radius: var(--radius-pill);
+    padding: 10px 16px 10px 40px;
+    color: var(--text-primary);
+    font-family: var(--font-body);
+    font-size: 0.9rem;
+    outline: none;
+    transition: border-color var(--transition), background var(--transition);
+}
+
+.inv-search::placeholder {
+    color: var(--text-muted);
+}
+
+.inv-search:focus {
+    border-color: var(--primary);
+    background: var(--bg-hover);
+}
+
+/* Filter selects */
+.inv-select {
+    background: var(--bg-card);
+    border: 1.5px solid var(--border);
+    border-radius: var(--radius-pill);
+    padding: 10px 14px;
+    color: var(--text-secondary);
+    font-family: var(--font-body);
+    font-size: 0.88rem;
+    outline: none;
+    cursor: pointer;
+    transition: border-color var(--transition);
+    -webkit-appearance: none;
+    appearance: none;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath d='M1 1l5 5 5-5' stroke='%235a6a8a' stroke-width='1.5' fill='none' stroke-linecap='round'/%3E%3C/svg%3E");
+    background-repeat: no-repeat;
+    background-position: right 12px center;
+    padding-right: 32px;
+}
+
+.inv-select:focus {
+    border-color: var(--primary);
+}
+
+.toolbar-spacer {
+    flex: 1;
+}
+
+/* ── Summary chips ──────────────────────────────────────── */
+.inv-summary {
+    display: flex;
+    gap: 10px;
+    flex-wrap: wrap;
+    margin-bottom: 20px;
+}
+
+.inv-chip {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 8px 16px;
+    border-radius: var(--radius-md);
+    border: 1px solid var(--border);
+    background: var(--bg-card);
+    font-size: 0.85rem;
+    cursor: pointer;
+    transition: all var(--transition);
+}
+
+.inv-chip:hover {
+    border-color: var(--border-hover);
+}
+
+.inv-chip.active {
+    background: rgba(0, 168, 120, 0.1);
+    border-color: rgba(0, 168, 120, 0.3);
+}
+
+.inv-chip-icon {
+    font-size: 1rem;
+}
+
+.inv-chip-label {
+    color: var(--text-muted);
+    font-size: 0.8rem;
+}
+
+.inv-chip-value {
+    font-weight: 700;
+    color: var(--text-primary);
+    font-family: var(--font-heading);
+}
+
+/* ── Inventory Table ────────────────────────────────────── */
+.inv-table-wrap {
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-lg);
+    overflow: hidden;
+}
+
+.inv-table-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 18px 24px;
+    border-bottom: 1px solid var(--border);
+}
+
+.inv-table-title {
+    font-family: var(--font-heading);
+    font-weight: 700;
+    font-size: 0.95rem;
+    color: var(--text-primary);
+}
+
+.inv-count {
+    font-size: 0.8rem;
+    color: var(--text-muted);
+    background: var(--bg-hover);
+    padding: 3px 10px;
+    border-radius: var(--radius-pill);
+}
+
+.inv-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 0.875rem;
+}
+
+.inv-table th {
+    padding: 11px 16px;
+    text-align: left;
+    font-size: 0.72rem;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--text-muted);
+    border-bottom: 1px solid var(--border);
+    white-space: nowrap;
+    cursor: pointer;
+    user-select: none;
+    transition: color var(--transition);
+}
+
+.inv-table th:hover {
+    color: var(--text-secondary);
+}
+
+.inv-table th.sorted {
+    color: var(--primary);
+}
+
+.sort-icon {
+    margin-left: 4px;
+    opacity: 0.5;
+}
+
+.inv-table td {
+    padding: 13px 16px;
+    color: var(--text-secondary);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.04);
+    vertical-align: middle;
+}
+
+.inv-table tr:last-child td {
+    border-bottom: none;
+}
+
+.inv-table tr {
+    transition: background var(--transition);
+    cursor: default;
+}
+
+.inv-table tr:hover td {
+    background: var(--bg-hover);
+}
+
+/* Cell types */
+.cell-name {
+    font-weight: 600;
+    color: var(--text-primary) !important;
+}
+
+.cell-name-sub {
+    font-size: 0.75rem;
+    color: var(--text-muted);
+    margin-top: 2px;
+}
+
+.cell-stock {
+    font-weight: 600;
+    color: var(--text-primary) !important;
+}
+
+.stock-bar-wrap {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.stock-bar {
+    width: 60px;
+    height: 4px;
+    background: var(--border);
+    border-radius: var(--radius-pill);
+    overflow: hidden;
+}
+
+.stock-bar-fill {
+    height: 100%;
+    border-radius: var(--radius-pill);
+    transition: width 0.5s var(--ease);
+}
+
+/* status badges */
+.status-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+    padding: 4px 12px;
+    border-radius: var(--radius-pill);
+    font-size: 0.72rem;
+    font-weight: 700;
+    white-space: nowrap;
+}
+
+.status-badge.good {
+    background: rgba(0, 168, 120, 0.12);
+    color: var(--primary);
+}
+
+.status-badge.low {
+    background: rgba(249, 115, 22, 0.12);
+    color: #fb923c;
+}
+
+.status-badge.critical {
+    background: rgba(248, 113, 113, 0.12);
+    color: #f87171;
+}
+
+.status-badge.expiring {
+    background: rgba(251, 191, 36, 0.12);
+    color: #fbbf24;
+}
+
+/* expiry cell */
+.cell-expiry.warn {
+    color: #fbbf24;
+    font-weight: 600;
+}
+
+.cell-expiry.danger {
+    color: #f87171;
+    font-weight: 700;
+}
+
+/* actions */
+.inv-actions {
+    display: flex;
+    gap: 6px;
+    justify-content: flex-end;
+}
+
+.inv-action-btn {
+    width: 32px;
+    height: 32px;
+    border-radius: var(--radius-sm);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    font-size: 0.9rem;
+    border: 1px solid var(--border);
+    background: var(--bg-surface);
+    transition: all var(--transition);
+}
+
+.inv-action-btn.edit:hover {
+    background: rgba(59, 130, 246, 0.12);
+    border-color: rgba(59, 130, 246, 0.3);
+}
+
+.inv-action-btn.delete:hover {
+    background: rgba(248, 113, 113, 0.12);
+    border-color: rgba(248, 113, 113, 0.3);
+}
+
+.inv-action-btn.view:hover {
+    background: rgba(0, 168, 120, 0.12);
+    border-color: rgba(0, 168, 120, 0.3);
+}
+
+/* empty state */
+.inv-empty {
+    padding: 64px 24px;
+    text-align: center;
+}
+
+.inv-empty-icon {
+    font-size: 3rem;
+    margin-bottom: 16px;
+    opacity: 0.5;
+}
+
+.inv-empty-title {
+    font-family: var(--font-heading);
+    font-size: 1.1rem;
+    font-weight: 700;
+    margin-bottom: 8px;
+}
+
+.inv-empty-sub {
+    font-size: 0.88rem;
+    color: var(--text-muted);
+}
+
+/* pagination */
+.inv-pagination {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 14px 24px;
+    border-top: 1px solid var(--border);
+    flex-wrap: wrap;
+    gap: 12px;
+}
+
+.inv-pagination-info {
+    font-size: 0.82rem;
+    color: var(--text-muted);
+}
+
+.inv-pagination-btns {
+    display: flex;
+    gap: 6px;
+}
+
+.inv-page-btn {
+    width: 34px;
+    height: 34px;
+    border-radius: var(--radius-sm);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 0.85rem;
+    border: 1px solid var(--border);
+    background: var(--bg-surface);
+    color: var(--text-secondary);
+    cursor: pointer;
+    transition: all var(--transition);
+    font-family: var(--font-body);
+    font-weight: 600;
+}
+
+.inv-page-btn:hover {
+    border-color: var(--primary);
+    color: var(--primary);
+}
+
+.inv-page-btn.active {
+    background: var(--primary);
+    color: #fff;
+    border-color: var(--primary);
+}
+
+.inv-page-btn:disabled {
+    opacity: 0.35;
+    cursor: not-allowed;
+}
+
+/* ── Modal ──────────────────────────────────────────────── */
+.modal-overlay {
+    position: fixed;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.65);
+    backdrop-filter: blur(6px);
+    z-index: 500;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 24px;
+    animation: fadeIn 0.2s var(--ease);
+}
+
+.modal {
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-xl);
+    width: 100%;
+    max-width: 580px;
+    max-height: 90vh;
+    overflow-y: auto;
+    box-shadow: 0 24px 80px rgba(0, 0, 0, 0.5);
+    animation: fadeUp 0.25s var(--ease);
+    scrollbar-width: thin;
+    scrollbar-color: var(--border) transparent;
+}
+
+.modal-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 24px 28px 20px;
+    border-bottom: 1px solid var(--border);
+    position: sticky;
+    top: 0;
+    background: var(--bg-card);
+    z-index: 1;
+}
+
+.modal-title {
+    font-family: var(--font-heading);
+    font-size: 1.15rem;
+    font-weight: 800;
+    color: var(--text-primary);
+}
+
+.modal-title span {
+    color: var(--primary);
+}
+
+.modal-close {
+    width: 32px;
+    height: 32px;
+    border-radius: var(--radius-sm);
+    background: var(--bg-hover);
+    border: 1px solid var(--border);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    font-size: 1rem;
+    color: var(--text-muted);
+    transition: all var(--transition);
+}
+
+.modal-close:hover {
+    background: rgba(248, 113, 113, 0.12);
+    border-color: rgba(248, 113, 113, 0.3);
+    color: #f87171;
+}
+
+.modal-body {
+    padding: 24px 28px;
+}
+
+.modal-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 18px;
+}
+
+.modal-grid .full {
+    grid-column: 1 / -1;
+}
+
+/* form fields inside modal */
+.modal-body .form-group {
+    display: flex;
+    flex-direction: column;
+    gap: 7px;
+}
+
+.modal-body .form-label {
+    font-size: 0.8rem;
+    font-weight: 600;
+    color: var(--text-secondary);
+    letter-spacing: 0.04em;
+}
+
+.modal-body .form-input {
+    width: 100%;
+    background: var(--bg-surface);
+    border: 1.5px solid var(--border);
+    border-radius: var(--radius-md);
+    padding: 11px 14px;
+    color: var(--text-primary);
+    font-family: var(--font-body);
+    font-size: 0.9rem;
+    outline: none;
+    transition: border-color var(--transition), background var(--transition);
+}
+
+.modal-body .form-input::placeholder {
+    color: var(--text-muted);
+}
+
+.modal-body .form-input:focus {
+    border-color: var(--primary);
+    background: var(--bg-hover);
+}
+
+.modal-body textarea.form-input {
+    resize: vertical;
+    min-height: 72px;
+}
+
+.modal-footer {
+    display: flex;
+    justify-content: flex-end;
+    gap: 12px;
+    padding: 0 28px 24px;
+}
+
+/* ── Delete confirmation modal ──────────────────────────── */
+.confirm-modal {
+    max-width: 400px;
+    text-align: center;
+    padding: 0;
+}
+
+.confirm-icon {
+    font-size: 3rem;
+    margin-bottom: 12px;
+}
+
+.confirm-title {
+    font-family: var(--font-heading);
+    font-size: 1.2rem;
+    font-weight: 800;
+    margin-bottom: 8px;
+}
+
+.confirm-desc {
+    font-size: 0.9rem;
+    color: var(--text-secondary);
+    line-height: 1.6;
+    margin-bottom: 24px;
+}
+
+.confirm-body {
+    padding: 32px 28px 24px;
+}
+
+.btn-danger {
+    background: linear-gradient(135deg, #ef4444, #dc2626);
+    color: #fff;
+    box-shadow: 0 4px 14px rgba(239, 68, 68, 0.3);
+}
+
+.btn-danger:hover {
+    transform: translateY(-1px);
+    box-shadow: 0 6px 20px rgba(239, 68, 68, 0.4);
+}
+
+/* ── Responsive ─────────────────────────────────────────── */
+@media (max-width: 900px) {
+    .inv-toolbar {
+        flex-direction: column;
+        align-items: stretch;
+    }
+
+    .inv-search-wrap {
+        max-width: 100%;
+    }
+
+    .modal-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .modal-grid .full {
+        grid-column: auto;
+    }
+}
+
+@media (max-width: 700px) {
+    .inv-table-wrap {
+        overflow-x: auto;
+    }
+
+    .inv-table {
+        min-width: 700px;
+    }
+}

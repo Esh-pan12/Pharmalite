@@ -1,0 +1,128 @@
+/* ── CTA Section ───────────────────────────────────────── */
+.cta-section {
+    padding: var(--section-py) 0;
+    position: relative;
+    overflow: hidden;
+}
+
+.cta-section::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: radial-gradient(ellipse at center, rgba(0, 168, 120, 0.12) 0%, transparent 70%);
+}
+
+.cta-inner {
+    background: linear-gradient(135deg, rgba(0, 168, 120, 0.12) 0%, rgba(124, 58, 237, 0.12) 100%);
+    border: 1px solid rgba(0, 168, 120, 0.2);
+    border-radius: var(--radius-xl);
+    padding: 80px 60px;
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+}
+
+.cta-inner::before {
+    content: '';
+    position: absolute;
+    top: -50%;
+    left: -50%;
+    width: 200%;
+    height: 200%;
+    background: conic-gradient(from 0deg at 50% 50%,
+            transparent 0deg,
+            rgba(0, 168, 120, 0.05) 60deg,
+            transparent 120deg,
+            rgba(124, 58, 237, 0.05) 180deg,
+            transparent 240deg,
+            rgba(0, 168, 120, 0.05) 300deg,
+            transparent 360deg);
+    animation: slowRotate 20s linear infinite;
+}
+
+@keyframes slowRotate {
+    from {
+        transform: rotate(0deg);
+    }
+
+    to {
+        transform: rotate(360deg);
+    }
+}
+
+.cta-content {
+    position: relative;
+    z-index: 1;
+}
+
+.cta-title {
+    font-family: var(--font-heading);
+    font-size: clamp(2rem, 4vw, 3rem);
+    font-weight: 800;
+    margin-bottom: 16px;
+    line-height: 1.15;
+}
+
+.cta-desc {
+    font-size: 1.1rem;
+    color: var(--text-secondary);
+    max-width: 500px;
+    margin: 0 auto 44px;
+    line-height: 1.7;
+}
+
+.cta-form {
+    display: flex;
+    gap: 12px;
+    max-width: 480px;
+    margin: 0 auto 24px;
+}
+
+.cta-input {
+    flex: 1;
+    background: rgba(255, 255, 255, 0.06);
+    border: 1.5px solid var(--border);
+    border-radius: var(--radius-pill);
+    padding: 14px 22px;
+    color: var(--text-primary);
+    font-family: var(--font-body);
+    font-size: 0.95rem;
+    outline: none;
+    transition: border-color var(--transition);
+}
+
+.cta-input::placeholder {
+    color: var(--text-muted);
+}
+
+.cta-input:focus {
+    border-color: var(--primary);
+}
+
+.cta-note {
+    font-size: 0.82rem;
+    color: var(--text-muted);
+}
+
+.cta-note a {
+    color: var(--primary);
+    transition: opacity var(--transition);
+}
+
+.cta-note a:hover {
+    opacity: 0.75;
+}
+
+@media (max-width: 600px) {
+    .cta-inner {
+        padding: 52px 24px;
+    }
+
+    .cta-form {
+        flex-direction: column;
+    }
+
+    .cta-form .btn {
+        justify-content: center;
+    }
+}
