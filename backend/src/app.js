@@ -20,8 +20,9 @@ const allowedOrigins = [
 ]
 app.use(cors({
     origin: (origin, cb) => {
-        // Allow requests with no origin (curl, Postman) and listed origins
-        if (!origin || allowedOrigins.includes(origin)) return cb(null, true)
+        if (!origin) return cb(null, true)                          // curl / Postman
+        if (allowedOrigins.includes(origin)) return cb(null, true) // exact match
+        if (/\.vercel\.app$/.test(origin)) return cb(null, true)   // any *.vercel.app
         cb(new Error(`CORS blocked for origin: ${origin}`))
     },
     credentials: true,
