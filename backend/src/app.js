@@ -47,7 +47,11 @@ mongoose.connect(process.env.MONGO_URI, {
 
 /* ── Health check ── */
 app.get('/api/health', (req, res) => {
-    res.json({ status: 'ok', db: mongoose.connection.readyState === 1 ? 'connected' : 'disconnected' })
+    res.json({
+        status: 'ok',
+        version: 'v2.0-user-isolated',
+        db: mongoose.connection.readyState === 1 ? 'connected' : 'disconnected',
+    })
 })
 
 /* ── Routes ── */
