@@ -1,5 +1,5 @@
 const express = require('express')
-const { body, query, validationResult } = require('express-validator')
+const { body, validationResult } = require('express-validator')
 const Medicine = require('../models/Medicine.model')
 const auth = require('../middleware/auth')
 
@@ -9,7 +9,7 @@ const router = express.Router()
 router.get('/', auth, async (req, res, next) => {
     try {
         const { search, category, status, sort = '-createdAt', page = 1, limit = 20 } = req.query
-        const filter = {}
+        const filter = { createdBy: req.user._id }
 
         if (search) filter.$or = [
             { name: { $regex: search, $options: 'i' } },
@@ -35,7 +35,7 @@ router.get('/', auth, async (req, res, next) => {
 /* ── GET /api/medicines/stats ── KPI counts ── */
 router.get('/stats', auth, async (req, res, next) => {
     try {
-        const all = await Medicine.find()
+        const all = await Medicine.find({ createdBy: req.user._id })
         const total = all.length
         const inStock = all.filter(m => m.status === 'in_stock').length
         const low = all.filter(m => m.status === 'low').length
@@ -53,7 +53,10 @@ router.get('/expiry', auth, async (req, res, next) => {
         const cutoff = new Date()
         cutoff.setDate(cutoff.getDate() + days)
 
-        const medicines = await Medicine.find({ expiry: { $lte: cutoff } }).sort('expiry')
+        const medicines = await Medicine.find({
+            createdBy: req.user._id,
+            expiry: { $lte: cutoff },
+        }).sort('expiry')
         res.json({ medicines })
     } catch (err) { next(err) }
 })
@@ -80,9 +83,11 @@ router.post('/', auth, [
 /* ── PUT /api/medicines/:id ── Edit ── */
 router.put('/:id', auth, async (req, res, next) => {
     try {
-        const medicine = await Medicine.findByIdAndUpdate(req.params.id, req.body, {
-            new: true, runValidators: true,
-        })
+        const medicine = await Medicine.findOneAndUpdate(
+            { _id: req.params.id, createdBy: req.user._id },
+            req.body,
+            { new: true, runValidators: true }
+        )
         if (!medicine) return res.status(404).json({ message: 'Medicine not found.' })
         res.json({ medicine })
     } catch (err) { next(err) }
@@ -91,7 +96,7 @@ router.put('/:id', auth, async (req, res, next) => {
 /* ── DELETE /api/medicines/:id ── ── */
 router.delete('/:id', auth, async (req, res, next) => {
     try {
-        const medicine = await Medicine.findByIdAndDelete(req.params.id)
+        const medicine = await Medicine.findOneAndDelete({ _id: req.params.id, createdBy: req.user._id })
         if (!medicine) return res.status(404).json({ message: 'Medicine not found.' })
         res.json({ message: 'Medicine deleted.' })
     } catch (err) { next(err) }

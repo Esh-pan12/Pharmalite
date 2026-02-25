@@ -10,7 +10,7 @@ const router = express.Router()
 router.get('/', auth, async (req, res, next) => {
     try {
         const { from, to, payment, page = 1, limit = 20 } = req.query
-        const filter = {}
+        const filter = { staff: req.user._id }
 
         if (from || to) {
             filter.createdAt = {}
@@ -42,7 +42,7 @@ router.get('/summary', auth, async (req, res, next) => {
         else if (period === 'month') from.setDate(now.getDate() - 29)
         else from = new Date(0)
 
-        const sales = await Sale.find({ createdAt: { $gte: from } })
+        const sales = await Sale.find({ staff: req.user._id, createdAt: { $gte: from } })
         const revenue = sales.reduce((s, t) => s + t.total, 0)
         const txns = sales.length
         const avgTicket = txns ? Math.round(revenue / txns) : 0
@@ -71,7 +71,8 @@ router.post('/', auth, [
         let total = 0
         const enriched = []
         for (const item of items) {
-            const med = await Medicine.findById(item.medicine)
+            // Only allow selling medicines owned by the current user
+            const med = await Medicine.findOne({ _id: item.medicine, createdBy: req.user._id })
             if (!med) return res.status(404).json({ message: `Medicine ${item.medicine} not found.` })
             if (med.stock < item.qty) {
                 return res.status(400).json({ message: `Insufficient stock for ${med.name}. Available: ${med.stock}` })
@@ -100,7 +101,7 @@ router.post('/', auth, [
 /* ── GET /api/sales/:id ── Single sale ── */
 router.get('/:id', auth, async (req, res, next) => {
     try {
-        const sale = await Sale.findById(req.params.id).populate('staff', 'name')
+        const sale = await Sale.findOne({ _id: req.params.id, staff: req.user._id }).populate('staff', 'name')
         if (!sale) return res.status(404).json({ message: 'Sale not found.' })
         res.json({ sale })
     } catch (err) { next(err) }

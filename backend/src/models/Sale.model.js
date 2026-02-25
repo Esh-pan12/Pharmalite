@@ -20,10 +20,10 @@ const saleSchema = new mongoose.Schema({
     staff: { type: mongoose.Schema.Types.ObjectId, ref: 'User', required: true },
 }, { timestamps: true })
 
-/* Auto-generate invoice number */
+/* Auto-generate invoice number (per-user sequence) */
 saleSchema.pre('save', async function (next) {
     if (!this.invoiceNo) {
-        const count = await mongoose.model('Sale').countDocuments()
+        const count = await mongoose.model('Sale').countDocuments({ staff: this.staff })
         this.invoiceNo = `INV-${String(count + 1).padStart(5, '0')}`
     }
     next()
