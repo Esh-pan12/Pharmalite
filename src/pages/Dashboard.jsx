@@ -31,9 +31,11 @@ export default function Dashboard() {
     const fetchAll = useCallback(async () => {
         setLoading(true)
         try {
+            const today = new Date()
+            today.setHours(0, 0, 0, 0)
             const [mStats, sSum, expiry, inv, salesWeek] = await Promise.all([
                 get('/api/medicines/stats'),
-                get('/api/sales/summary?period=today'),
+                get(`/api/sales/summary?from=${today.toISOString()}`),
                 get('/api/medicines/expiry?days=90'),
                 get('/api/medicines?limit=5&sort=stock'),
                 get('/api/sales?limit=200'),
@@ -49,9 +51,13 @@ export default function Dashboard() {
                 const d = new Date()
                 d.setDate(d.getDate() - (6 - i))
                 const label = d.toLocaleDateString('en-IN', { weekday: 'short' })
-                const dateStr = d.toISOString().slice(0, 10)
                 const rev = allSales
-                    .filter(s => s.createdAt?.slice(0, 10) === dateStr)
+                    .filter(s => {
+                        const sd = new Date(s.createdAt)
+                        return sd.getDate() === d.getDate() && 
+                               sd.getMonth() === d.getMonth() && 
+                               sd.getFullYear() === d.getFullYear()
+                    })
                     .reduce((sum, s) => sum + s.total, 0)
                 return { label, value: rev, isToday: i === 6 }
             })

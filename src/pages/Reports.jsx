@@ -102,10 +102,15 @@ export default function Reports() {
         for (let i = 29; i >= 0; i--) {
             const d = new Date(now)
             d.setDate(d.getDate() - i)
-            const dStr = d.toISOString().slice(0, 10)
-            const daySales = sales.filter(s => s.createdAt?.slice(0, 10) === dStr)
+            const daySales = sales.filter(s => {
+                const sd = new Date(s.createdAt)
+                return sd.getDate() === d.getDate() && 
+                       sd.getMonth() === d.getMonth() && 
+                       sd.getFullYear() === d.getFullYear()
+            })
             const rev = daySales.reduce((sum, s) => sum + s.total, 0)
-            dailyData.push({ x: 30 - i, y: rev, label: dStr.slice(5) }) // label MM-DD
+            const label = `${String(d.getMonth() + 1).padStart(2, '0')}-${String(d.getDate()).padStart(2, '0')}`
+            dailyData.push({ x: 30 - i, y: rev, label })
         }
 
         // Apply Linear Regression
