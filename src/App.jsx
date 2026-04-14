@@ -19,7 +19,9 @@ import Dashboard from './pages/Dashboard'
 import Inventory from './pages/Inventory'
 import Sales from './pages/Sales'
 import ExpiryAlerts from './pages/ExpiryAlerts'
+import LowStock from './pages/LowStock'
 import Settings from './pages/Settings'
+import Profile from './pages/Profile'
 import Reports from './pages/Reports'
 import Suppliers from './pages/Suppliers'
 import Staff from './pages/Staff'
@@ -78,9 +80,19 @@ export default function App() {
                             <ExpiryAlerts />
                         </PrivateRoute>
                     } />
+                    <Route path="/low-stock" element={
+                        <PrivateRoute>
+                            <LowStock />
+                        </PrivateRoute>
+                    } />
                     <Route path="/settings" element={
                         <PrivateRoute>
                             <Settings />
+                        </PrivateRoute>
+                    } />
+                    <Route path="/profile" element={
+                        <PrivateRoute>
+                            <Profile />
                         </PrivateRoute>
                     } />
                     <Route path="/reports" element={

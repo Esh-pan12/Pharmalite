@@ -1015,6 +1015,28 @@
     border-top: 1px solid var(--border);
 }
 
+/* Expired Result */
+.ns-result-expired {
+    opacity: 0.6;
+    cursor: not-allowed;
+    background: repeating-linear-gradient(
+        -45deg,
+        rgba(239, 68, 68, 0.05),
+        rgba(239, 68, 68, 0.05) 10px,
+        transparent 10px,
+        transparent 20px
+    );
+}
+.ns-result-expired:hover {
+    background: repeating-linear-gradient(
+        -45deg,
+        rgba(239, 68, 68, 0.05),
+        rgba(239, 68, 68, 0.05) 10px,
+        transparent 10px,
+        transparent 20px
+    ) !important;
+}
+
 /* Error */
 .ns-error {
     background: rgba(239, 68, 68, 0.08);

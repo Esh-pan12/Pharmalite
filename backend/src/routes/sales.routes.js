@@ -74,6 +74,9 @@ router.post('/', auth, [
             // Only allow selling medicines owned by the current user
             const med = await Medicine.findOne({ _id: item.medicine, createdBy: req.user._id })
             if (!med) return res.status(404).json({ message: `Medicine ${item.medicine} not found.` })
+            if (med.status === 'expired') {
+                return res.status(400).json({ message: `Cannot sell expired medicine: ${med.name}` })
+            }
             if (med.stock < item.qty) {
                 return res.status(400).json({ message: `Insufficient stock for ${med.name}. Available: ${med.stock}` })
             }

@@ -419,11 +419,15 @@ export default function TopBar({ title, onMobileMenuToggle }) {
                             </div>
 
                             {[
-                                { icon: '👤', label: 'My Profile' },
-                                { icon: '⚙️', label: 'Settings' },
-                                { icon: '❓', label: 'Help & Support' },
+                                { icon: '👤', label: 'My Profile', path: '/profile' },
+                                { icon: '⚙️', label: 'Settings', path: '/settings' },
+                                { icon: '❓', label: 'Help & Support', path: '#' },
                             ].map(item => (
-                                <div className="dropdown-item" key={item.label}>
+                                <div 
+                                    className="dropdown-item" 
+                                    key={item.label} 
+                                    onClick={() => { setDropdownOpen(false); if(item.path && item.path !== '#') navigate(item.path) }}
+                                >
                                     <span className="dropdown-item-icon">{item.icon}</span>
                                     {item.label}
                                 </div>

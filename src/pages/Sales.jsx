@@ -100,6 +100,10 @@ function NewSaleModal({ onClose, onSuccess }) {
     }, [query])
 
     const addToCart = (med) => {
+        if (med.status === 'expired') {
+            setError(`Cannot add ${med.name} to cart because it is expired!`)
+            return
+        }
         setQuery(''); setResults([])
         setCart(c => {
             const idx = c.findIndex(i => i.medicine === med._id)
@@ -187,14 +191,20 @@ function NewSaleModal({ onClose, onSuccess }) {
                         {results.length > 0 && (
                             <div className="ns-results">
                                 {results.map(med => (
-                                    <div key={med._id} className="ns-result-item" onClick={() => addToCart(med)}>
+                                    <div key={med._id} className={`ns-result-item${med.status === 'expired' ? ' ns-result-expired' : ''}`} onClick={() => addToCart(med)}>
                                         <div className="ns-result-name">{med.name}</div>
                                         <div className="ns-result-meta">{med.generic || med.manufacturer} · {med.unit}</div>
                                         <div className="ns-result-right">
                                             <span className="ns-result-price">₹{med.mrp}</span>
-                                            <span className={`ns-stock-badge ${med.stock <= 0 ? 'out' : med.stock <= 20 ? 'low' : 'ok'}`}>
-                                                {med.stock <= 0 ? 'Out' : `${med.stock} left`}
-                                            </span>
+                                            {med.status === 'expired' ? (
+                                                <span className="ns-stock-badge expired" style={{ background: 'rgba(239,68,68,0.1)', color: '#ef4444', fontWeight: 600, border: '1px solid rgba(239,68,68,0.2)' }}>
+                                                    Expired
+                                                </span>
+                                            ) : (
+                                                <span className={`ns-stock-badge ${med.stock <= 0 ? 'out' : med.stock <= 20 ? 'low' : 'ok'}`}>
+                                                    {med.stock <= 0 ? 'Out' : `${med.stock} left`}
+                                                </span>
+                                            )}
                                         </div>
                                     </div>
                                 ))}

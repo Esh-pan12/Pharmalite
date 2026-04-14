@@ -17,6 +17,7 @@ const navGroups = [
         label: 'Management',
         items: [
             { icon: '⚠️', label: 'Expiry Alerts', to: '/expiry', badge: '7' },
+            { icon: '📉', label: 'Low Stock', to: '/low-stock', badge: null },
             { icon: '📦', label: 'Suppliers', to: '/suppliers', badge: null },
             { icon: '👤', label: 'Staff', to: '/staff', badge: null },
         ],
@@ -25,7 +26,7 @@ const navGroups = [
         label: 'Settings',
         items: [
             { icon: '⚙️', label: 'Settings', to: '/settings', badge: null },
-            { icon: '👤', label: 'Profile', to: '/settings', badge: null },
+            { icon: '👤', label: 'Profile', to: '/profile', badge: null },
         ],
     },
 ]

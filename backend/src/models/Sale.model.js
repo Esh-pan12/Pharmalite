@@ -8,7 +8,7 @@ const saleItemSchema = new mongoose.Schema({
 })
 
 const saleSchema = new mongoose.Schema({
-    invoiceNo: { type: String, unique: true },
+    invoiceNo: { type: String }, // Remove global unique constraint
     customer: { type: String, default: 'Walk-in' },
     items: { type: [saleItemSchema], required: true },
     total: { type: Number, required: true },
@@ -19,6 +19,9 @@ const saleSchema = new mongoose.Schema({
     },
     staff: { type: mongoose.Schema.Types.ObjectId, ref: 'User', required: true },
 }, { timestamps: true })
+
+/* Compound unique index to make invoice user-specific */
+saleSchema.index({ staff: 1, invoiceNo: 1 }, { unique: true })
 
 /* Auto-generate invoice number (per-user sequence) */
 saleSchema.pre('save', async function (next) {
