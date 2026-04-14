@@ -3,7 +3,13 @@
 A modern, full-stack **Pharmacy Management System** built with React + Node.js/Express + MongoDB Atlas.
 
 ---
+##Key Features Include:
 
+Smart Inventory & Expiry Management: Automatically tracks batch numbers, triggers alerts for medicines nearing expiration, and surfaces low-stock items for quick reordering.
+Fast & Secure Billing: A highly efficient POS interface with cart validation that prevents the sale of expired medicines and maintains globally unique invoicing per staff member.
+Data Science Analytics: Powers a dedicated Reports engine that runs client-side algorithms like Linear Regression for revenue forecasting and Pareto (80/20) Analysis to identify the highest-yielding inventory.
+Premium User Experience: Features a lightning-fast, reactive dashboard equipped with dark-mode, keyboard shortcuts, and deep data export functionalities.
+In short, it is a highly intelligent, end-to-end operational hub engineered to minimize pharmaceutical waste, maximize profit tracking, and bring modern retail standards to pharmacies.
 ## ✨ Features
 
 - **Dashboard** — Live KPIs (revenue, stock, expiry alerts, low-stock counts)
